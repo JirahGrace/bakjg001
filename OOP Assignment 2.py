@@ -22,10 +22,13 @@ class Alchemist:
         self.recipies = {}
 
 class Laboratory:
-    pass
+    def __init__(self, potions, herbs, catalysts):
+        self.potions = Potion
+        self.herbs = Herb
+        self.catalysts = Catalyst
 
 class Potion(ABC):
-    pass
+    def __init__():
 
 class SuperPotion(Potion):
     pass
