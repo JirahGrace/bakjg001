@@ -7,13 +7,24 @@ EmailID: bakjg001
 This is my own work as defined by the University's Academic Misconduct Policy.
 '''
 
+from abc import ABC, abstractmethod
+
+
 class Alchemist:
-    pass
+    def __init__(self, attack, strength, defense, magic, ranged, necromancy, laboratory, recipies):
+        self.attack = attack
+        self.strength = strength 
+        self.defense = defense
+        self.magic = magic
+        self.ranged = ranged
+        self.necromancy = necromancy
+        self.laboratory = Laboratory
+        self.recipies = {}
 
 class Laboratory:
     pass
 
-class Potion:
+class Potion(ABC):
     pass
 
 class SuperPotion(Potion):
@@ -22,7 +33,7 @@ class SuperPotion(Potion):
 class ExtremePotion(Potion):
     pass
 
-class Reagent:
+class Reagent(ABC):
     pass
 
 class Herb(Reagent):
