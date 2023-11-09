@@ -12,53 +12,53 @@ from abc import ABC, abstractmethod
 
 class Alchemist:
     def __init__(self, attack, strength, defense, magic, ranged, necromancy, laboratory, recipies):
-        self.attack = attack
-        self.strength = strength 
-        self.defense = defense
-        self.magic = magic
-        self.ranged = ranged
-        self.necromancy = necromancy
-        self.laboratory = Laboratory
-        self.recipies = {}
+        self.__attack = attack
+        self.__strength = strength 
+        self.__defense = defense
+        self.__magic = magic
+        self.__ranged = ranged
+        self.__necromancy = necromancy
+        self.__laboratory = Laboratory
+        self.__recipies = {}
 
 class Laboratory:
     def __init__(self, potions, herbs, catalysts):
-        self.potions = []
-        self.herbs = []
-        self.catalysts = []
+        self.__potions = []
+        self.__herbs = []
+        self.__init__catalysts = []
 
 class Potion(ABC):
     def __init__(self, name, stat, boost):
-        self.name = name
-        self.stat = stat
-        self.boost = boost
+        self.__name = name
+        self.__stat = stat
+        self.__boost = boost
 
 class SuperPotion(Potion):
     def __init__(self, herb, catalyst, name, stat, boost):
         super().__init__(name, stat, boost)
-        self.herb = herb
-        self.cataylst = catalyst
+        self.__herb = herb
+        self.__cataylst = catalyst
 
 
 class ExtremePotion(Potion):
     def __init__(self, reagent, potion, name, stat, boost):
         super().__init__(name, stat, boost)
-        self.reagent = reagent
-        self.potion = potion
+        self.__reagent = reagent
+        self.__potion = potion
 
 class Reagent(ABC):
     def __init__(self, name, potency):
-        self.name = name
-        self.potency = potency
+        self.__name = name
+        self.__potency = potency
 
 class Herb(Reagent):
     def __init__(self, grimy, name, potency):
         super().__init__(name, potency)
-        self.grimy = True
+        self.__grimy = True
 
 class Catalyst(Reagent):
     def __init__(self, quality, name, potency):
         super().__init__(name, potency)
-        self.quality = quality
+        self.__quality = quality
 
 
