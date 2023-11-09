@@ -23,26 +23,42 @@ class Alchemist:
 
 class Laboratory:
     def __init__(self, potions, herbs, catalysts):
-        self.potions = Potion
-        self.herbs = Herb
-        self.catalysts = Catalyst
+        self.potions = []
+        self.herbs = []
+        self.catalysts = []
 
 class Potion(ABC):
-    def __init__():
+    def __init__(self, name, stat, boost):
+        self.name = name
+        self.stat = stat
+        self.boost = boost
 
 class SuperPotion(Potion):
-    pass
+    def __init__(self, herb, catalyst, name, stat, boost):
+        super().__init__(name, stat, boost)
+        self.herb = herb
+        self.cataylst = catalyst
+
 
 class ExtremePotion(Potion):
-    pass
+    def __init__(self, reagent, potion, name, stat, boost):
+        super().__init__(name, stat, boost)
+        self.reagent = reagent
+        self.potion = potion
 
 class Reagent(ABC):
-    pass
+    def __init__(self, name, potency):
+        self.name = name
+        self.potency = potency
 
 class Herb(Reagent):
-    pass
+    def __init__(self, grimy, name, potency):
+        super().__init__(name, potency)
+        self.grimy = True
 
 class Catalyst(Reagent):
-    pass
+    def __init__(self, quality, name, potency):
+        super().__init__(name, potency)
+        self.quality = quality
 
 
