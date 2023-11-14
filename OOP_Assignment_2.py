@@ -189,7 +189,19 @@ recipe of an extreme potion consists of a herb or catalyst and a super potion.''
         self.__ranged = ranged
         self.__necromancy = necromancy
         self.__laboratory = laboratory
-        self.__recipes = {}
+        self.__recipes = {
+            "Super Attack": ["Irit", "Eye of Newt"],
+            "Super Strength": ["Kwuarm", "Limpwurt Root"],
+            "Super Defence": ["Cadantine, White Berries"],
+            "Super Magic": ["Lantadyme", "Potato Cactus"],
+            "Super Ranging": ["Dwarf Weed", "Wine of Zamorak"],
+            "Super Necromancy": ["Arbuck", "Blood of Orcus"],
+            "Extreme Attack": ["Avantoe", "Super Attack"],
+            "Extreme Strength": ["Dwarf Weed", "Super Strength"],
+            "Extreme Defence": ["Lantadyme", "Super Defence"],
+            "Extreme Magic": ["Ground Mud Rune", "Super Magic"],
+            "Extreme Ranging": ["Grenwall Spike", "Super Ranging"],
+            "Extreme Necromancy": ["Ground Miasma Rune", "Super Necromancy"]}
 
     def getLaboratory(self):
         return self.__laboratory
