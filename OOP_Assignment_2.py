@@ -9,61 +9,6 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from abc import ABC, abstractmethod
 
-
-class Alchemist:
-    ''' The attributes in Alchemist from attack to necromancy are values between 0 and 100 which indicate the
-strength of that attribute. An alchemist knows the following recipes that can create two types of potions,
-super potions and extreme potions. The recipe of a super potions consists of a herb and a catalyst. The
-recipe of an extreme potion consists of a herb or catalyst and a super potion.'''
-    def __init__(self, attack, strength, defense, magic, ranged, necromancy, laboratory, recipies):
-        self.__attack = attack
-        self.__strength = strength 
-        self.__defense = defense
-        self.__magic = magic
-        self.__ranged = ranged
-        self.__necromancy = necromancy
-        self.__laboratory = Laboratory
-        self.__recipies = {}
-
-    def getLaboratory(self):
-        return self.__laboratory
-
-    def getRecipies(self):
-        return self.__recipies
-
-    def mixPotion(self, recipe):
-        pass
-
-    def drinkPotion(self, potion):
-        pass
-
-    def collectReagent(self, reagent, amount):
-        pass
-
-    def refineReagent(self):
-        pass
-
-
-class Laboratory:
-    ''' The laboratory stores the potions, herbs, and catalysts.
-It provides functionality for an alchemist to mix potions: Each potion that is mixed has a name and its first
-ingredient is either a herb or a catalyst that is stored in the laboratory. The second ingredient is either a
-catalyst or another potion. Depending on the potion type, the proper potion must be created. Which
-attribute of an alchemist the potion is increasing is specified in the status of the potions.
-Reagents can be added to the laboratory. To keep it simple, this functionality specifies the amount of
-reagents being available in the laboratory.'''
-    def __init__(self, potions, herbs, catalysts):
-        self.__potions = []
-        self.__herbs = []
-        self.__init__catalysts = []
-    
-    def mixPotion(self, name, type, stat, primaryIngredient, secondaryIngredient):
-        pass
-
-    def addReagent(self, reagent, amount):
-        pass
-
-
 class Potion(ABC):
     '''A potion has a name, what kind of attribute of an alchemist it can increase (i.e., stat attribute), and by how
         much the attribute is increased (i.e., boost attribute).
@@ -195,3 +140,71 @@ class ExtremePotion(Potion):
 
     def getPotion(self):
         return self.__potion
+
+
+class Laboratory:
+    ''' The laboratory stores the potions, herbs, and catalysts.
+It provides functionality for an alchemist to mix potions: Each potion that is mixed has a name and its first
+ingredient is either a herb or a catalyst that is stored in the laboratory. The second ingredient is either a
+catalyst or another potion. Depending on the potion type, the proper potion must be created. Which
+attribute of an alchemist the potion is increasing is specified in the status of the potions.
+Reagents can be added to the laboratory. To keep it simple, this functionality specifies the amount of
+reagents being available in the laboratory.'''
+    def __init__(self, potions:list[Potion], herbs:list[Herb], catalysts:list[Catalyst]):
+        self.__potions = potions
+        self.__herbs = herbs
+        self.__catalysts = catalysts
+
+    def getHerbs(self):
+        return self.__herbs
+    
+    def getCatalysts(self):
+        return self.__catalysts
+    
+    def getPotions(self):
+        return self.__potions
+    
+    def mixPotion(self, name:str, type:str, stat:str, primaryIngredient:str, secondaryIngredient:str):
+        pass
+
+    def addReagent(self, reagent:Reagent, amount:int):
+        if isinstance(reagent, Herb):
+            self.__herbs.extend([reagent]*amount)
+        elif isinstance(reagent, Catalyst):
+            self.__catalysts.extend([reagent]*amount)
+        else:
+            raise Exception("Unknown Reagent Type")
+
+
+class Alchemist:
+    ''' The attributes in Alchemist from attack to necromancy are values between 0 and 100 which indicate the
+strength of that attribute. An alchemist knows the following recipes that can create two types of potions,
+super potions and extreme potions. The recipe of a super potions consists of a herb and a catalyst. The
+recipe of an extreme potion consists of a herb or catalyst and a super potion.'''
+    def __init__(self, attack, strength, defense, magic, ranged, necromancy, laboratory, recipies):
+        self.__attack = attack
+        self.__strength = strength 
+        self.__defense = defense
+        self.__magic = magic
+        self.__ranged = ranged
+        self.__necromancy = necromancy
+        self.__laboratory = Laboratory
+        self.__recipies = {}
+
+    def getLaboratory(self):
+        return self.__laboratory
+
+    def getRecipies(self):
+        return self.__recipies
+
+    def mixPotion(self, recipe):
+        pass
+
+    def drinkPotion(self, potion):
+        pass
+
+    def collectReagent(self, reagent, amount):
+        pass
+
+    def refineReagent(self):
+        pass

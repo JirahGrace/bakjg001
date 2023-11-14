@@ -34,7 +34,14 @@ class TestLaboratory(unittest.TestCase):
         pass
 
     def testAddReagent(self):
-        pass
+        herb = Herb(False, "test", 10)
+        lab = Laboratory([], [], [])
+        lab.addReagent(herb, 10)
+        self.assertEqual(len(lab.getHerbs()), 10)
+        catalyst = Catalyst(5, "Dog", 7,)
+        lab.addReagent(catalyst, 3)
+        self.assertEqual(len(lab.getCatalysts()), 3)
+
 
 
 class TestPotion(unittest.TestCase):
