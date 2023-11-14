@@ -43,7 +43,6 @@ class TestLaboratory(unittest.TestCase):
         self.assertEqual(len(lab.getCatalysts()), 3)
 
 
-
 class TestPotion(unittest.TestCase):
     def testGetName(self):
         pass
