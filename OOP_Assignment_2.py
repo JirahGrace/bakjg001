@@ -146,7 +146,15 @@ It should print on the screen the quality and say that “it cannot be refined a
         self.__quality = quality
 
     def refine(self):
-        pass
+        if self.__quality < 8.9:
+            self.__quality = self.__quality + 1.1
+            print(f'The quality of {self.getName()} has been increased by 1.1')
+        elif self.__quality >= 8.9:
+            self.__quality = 10
+            print(f'The quality of {self.getName()} has been increased to 10 and cannnot be refined any further')
+        else:
+            print(f'{self.getName} cannot be refined any further.')
+
 
     def getQuality(self):
         return self.__quality

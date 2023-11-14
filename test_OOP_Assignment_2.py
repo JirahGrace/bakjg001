@@ -109,7 +109,13 @@ class TestHerb(unittest.TestCase):
 
 class TestCatalyst(unittest.TestCase):
     def testRefine(self):
-        pass
+        catalyst = Catalyst(7, 'Test Catalyst', 7)
+        catalyst.refine()
+        self.assertEqual(catalyst.getQuality(), 8.1)
+        catalyst.refine()
+        self.assertEqual(catalyst.getQuality(), 9.2)
+        catalyst.refine()
+        self.assertEqual(catalyst.getQuality(), 10.0)
 
     def testGetQuality(self):
         pass
