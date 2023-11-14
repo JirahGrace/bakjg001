@@ -68,7 +68,11 @@ class TestSuperPotion(unittest.TestCase):
 
 class TestExtremePotion(unittest.TestCase):
     def testCalculateBoost(self):
-        pass
+        herb = Herb(False, "test", 10)
+        catalyst = Catalyst(5, "Dog", 7,)
+        superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
+        extremePotion = ExtremePotion(catalyst, superPotion, "Test", False, 1)
+        self.assertEqual(extremePotion.calculateBoost(), 21.0)
 
     def testGetReagent(self):
         pass
