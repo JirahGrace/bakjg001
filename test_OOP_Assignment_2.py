@@ -27,7 +27,15 @@ class TestAlchemist(unittest.TestCase):
         pass
 
     def testRefineReagent(self):
-        pass
+        herb = Herb(False, "test", 10)
+        catalyst = Catalyst(5, "Dog", 7,)
+        alchemist = Alchemist(0, 0, 0, 0, 0, 0, Laboratory([], [], []))
+        alchemist.collectReagents(herb, 1)
+        alchemist.collectReagents(catalyst, 1)
+        alchemist.refineReagents()
+        self.assertEqual(alchemist.getLaboratory().getHerbs()[0].getPotency(), 25.0)
+        self.assertEqual(alchemist.getLaboratory().getCatalysts()[0].getQuality(), 6.1)
+
 
 class TestLaboratory(unittest.TestCase):
     def testMixPotion(self):

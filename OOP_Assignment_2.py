@@ -181,21 +181,21 @@ class Alchemist:
 strength of that attribute. An alchemist knows the following recipes that can create two types of potions,
 super potions and extreme potions. The recipe of a super potions consists of a herb and a catalyst. The
 recipe of an extreme potion consists of a herb or catalyst and a super potion.'''
-    def __init__(self, attack, strength, defense, magic, ranged, necromancy, laboratory, recipies):
+    def __init__(self, attack:int, strength:int, defense:int, magic:int, ranged:int, necromancy:int, laboratory:Laboratory):
         self.__attack = attack
         self.__strength = strength 
         self.__defense = defense
         self.__magic = magic
         self.__ranged = ranged
         self.__necromancy = necromancy
-        self.__laboratory = Laboratory
-        self.__recipies = {}
+        self.__laboratory = laboratory
+        self.__recipes = {}
 
     def getLaboratory(self):
         return self.__laboratory
 
     def getRecipies(self):
-        return self.__recipies
+        return self.__recipes
 
     def mixPotion(self, recipe):
         pass
@@ -203,8 +203,12 @@ recipe of an extreme potion consists of a herb or catalyst and a super potion.''
     def drinkPotion(self, potion):
         pass
 
-    def collectReagent(self, reagent, amount):
-        pass
+    def collectReagents(self, reagent, amount):
+        self.__laboratory.addReagent(reagent, amount)
 
-    def refineReagent(self):
-        pass
+    def refineReagents(self):
+        for herb in self.getLaboratory().getHerbs():
+            herb.refine()
+
+        for catalyst in self.getLaboratory().getCatalysts():
+            catalyst.refine()
