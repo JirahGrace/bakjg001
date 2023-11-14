@@ -123,7 +123,12 @@ print this information on the screen as well.'''
         self.__grimy = True
 
     def refine(self):
-        pass
+        if self.__grimy is True:
+            self.setPotency(self.getPotency() * 2.5)
+            print(f'{self.getName()} Refined: New Potency {self.getPotency()}')
+        else:
+            print(f'{self.getName()} cannot be refined any further.')
+        self.setGrimy(False)
 
     def getGrimy(self):
         return self.__grimy

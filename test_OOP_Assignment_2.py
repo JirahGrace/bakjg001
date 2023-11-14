@@ -94,7 +94,11 @@ class TestReagent(unittest.TestCase):
 
 class TestHerb(unittest.TestCase):
     def testRefine(self):
-        pass
+        herb = Herb(False, "test", 10)
+        before = herb.getPotency()
+        herb.refine()
+        self.assertEqual(herb.getPotency(), before * 2.5)
+        self.assertFalse(herb.getGrimy())
 
     def testGetGrimy(self):
         pass
