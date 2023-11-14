@@ -79,7 +79,7 @@ class Potion(ABC):
 
     @abstractmethod
     def calculateBoost(self):
-        pass
+        raise Exception("Abstract Method Called")
 
     def getName(self):
         return self.__name
@@ -103,8 +103,9 @@ class SuperPotion(Potion):
         self.__herb = herb
         self.__cataylst = catalyst
 
-    def caculateBoost(self):
-        pass
+    def calculateBoost(self) -> float:
+        boost = self.getHerb().getPotency() + (self.getCatalyst().getPotency() * self.getCatalyst().getQuality()) * 1.5
+        return boost
 
     def getHerb(self):
         return self.__herb
