@@ -11,11 +11,51 @@ import unittest
 from OOP_Assignment_2 import *
 
 class TestAlchemist(unittest.TestCase):
+    def testGetAttack(self):
+        alchemist = Alchemist(1, 2, 3, 4, 5, 6, None)
+        self.assertEqual(alchemist.getAttack(), 1)
+    
+    def testGetStrength(self):
+        alchemist = Alchemist(1, 2, 3, 4, 5, 6, None)
+        self.assertEqual(alchemist.getStrength(), 2)
+
+    def testGetDefence(self):
+        alchemist = Alchemist(1, 2, 3, 4, 5, 6, None)
+        self.assertEqual(alchemist.getDefence(), 3)
+    
+    def testGetMagic(self):
+        alchemist = Alchemist(1, 2, 3, 4, 5, 6, None)
+        self.assertEqual(alchemist.getMagic(), 4)
+    
+    def testGetRanged(self):
+        alchemist = Alchemist(1, 2, 3, 4, 5, 6, None)
+        self.assertEqual(alchemist.getRanged(), 5)
+    
+    def testGetNecromancy(self):
+        alchemist = Alchemist(1, 2, 3, 4, 5, 6, None)
+        self.assertEqual(alchemist.getNecromancy(), 6)
+
     def testGetLaboratory(self):
-        pass
+        lab = Laboratory([], [], [])
+        alchemist = Alchemist(1, 1, 1, 1, 1, 1, lab)
+        self.assertEqual(alchemist.getLaboratory(), lab)
 
     def testGetRecipies(self):
-        pass
+        lab = Laboratory([], [], [])
+        alchemist = Alchemist(1, 1, 1, 1, 1, 1, lab)
+        self.assertEqual(alchemist.getRecipies(), {
+            "Super Attack": ["Irit", "Eye of Newt"],
+            "Super Strength": ["Kwuarm", "Limpwurt Root"],
+            "Super Defence": ["Cadantine", "White Berries"],
+            "Super Magic": ["Lantadyme", "Potato Cactus"],
+            "Super Ranging": ["Dwarf Weed", "Wine of Zamorak"],
+            "Super Necromancy": ["Arbuck", "Blood of Orcus"],
+            "Extreme Attack": ["Avantoe", "Super Attack"],
+            "Extreme Strength": ["Dwarf Weed", "Super Strength"],
+            "Extreme Defence": ["Lantadyme", "Super Defence"],
+            "Extreme Magic": ["Ground Mud Rune", "Super Magic"],
+            "Extreme Ranging": ["Grenwall Spike", "Super Ranging"],
+            "Extreme Necromancy": ["Ground Miasma Rune", "Super Necromancy"]})
 
     def testMixPotion(self):
         alchemist = Alchemist(1, 1, 1, 1, 1, 1, Laboratory([],[],[]))
@@ -81,7 +121,14 @@ class TestAlchemist(unittest.TestCase):
         self.assertEqual(alchemist.getNecromancy(), 173.75500000000002)
 
     def testCollectReagent(self):
-        pass
+        lab = Laboratory([], [], [])
+        alchemist = Alchemist(1, 1, 1, 1, 1, 1, lab)
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        alchemist.collectReagent(herb, 1)
+        self.assertEqual(len(lab.getHerbs()), 1)
+        alchemist.collectReagent(catalyst, 1)
+        self.assertEqual(len(lab.getCatalysts()), 1)
 
     def testRefineReagent(self):
         herb = Herb("test", 10)
@@ -118,16 +165,29 @@ class TestLaboratory(unittest.TestCase):
 
 class TestPotion(unittest.TestCase):
     def testGetName(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        potion = SuperPotion(herb, catalyst, "Name", "Stat", 1.0)
+        self.assertEqual(potion.getName(), "Name")
 
     def testGetStat(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        potion = SuperPotion(herb, catalyst, "Name", "Stat", 1.0)
+        self.assertEqual(potion.getStat(), "Stat")
 
     def testGetBoost(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        potion = SuperPotion(herb, catalyst, "Name", "Stat", 1.0)
+        self.assertEqual(potion.getBoost(), 1.0)
 
     def testSetBoost(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        potion = SuperPotion(herb, catalyst, "Name", "Stat", 1.0)
+        potion.setBoost(10)
+        self.assertEqual(potion.getBoost(), 10)
 
 
 class TestSuperPotion(unittest.TestCase):
@@ -137,12 +197,17 @@ class TestSuperPotion(unittest.TestCase):
         superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
         self.assertEqual(superPotion.calculateBoost(), (10 + (7*5)*1.5))
         
-
     def testGetHerb(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
+        self.assertEqual(superPotion.getHerb(), herb)
 
     def testGetCatalyst(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
+        self.assertEqual(superPotion.getCatalyst(), catalyst)
 
 
 class TestExtremePotion(unittest.TestCase):
@@ -154,21 +219,33 @@ class TestExtremePotion(unittest.TestCase):
         self.assertEqual(extremePotion.calculateBoost(), 21.0)
 
     def testGetReagent(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
+        extremePotion = ExtremePotion(catalyst, superPotion, "Test", False, 1)
+        self.assertEqual(extremePotion.getReagent(), catalyst)
 
     def testGetPotion(self):
-        pass
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
+        extremePotion = ExtremePotion(catalyst, superPotion, "Test", False, 1)
+        self.assertEqual(extremePotion.getPotion(), superPotion)
 
 
 class TestReagent(unittest.TestCase):
     def testGetName(self):
-        pass
+        herb = Herb("test", 10)
+        self.assertEqual(herb.getName(), "test")
 
     def testGetPotency(self):
-        pass
+        herb = Herb("test", 10)
+        self.assertEqual(herb.getPotency(), 10)
 
     def testSetPotency(self):
-        pass
+        herb = Herb("test", 10)
+        herb.setPotency(15)
+        self.assertEqual(herb.getPotency(), 15)
 
 
 class TestHerb(unittest.TestCase):
@@ -180,10 +257,13 @@ class TestHerb(unittest.TestCase):
         self.assertFalse(herb.getGrimy())
 
     def testGetGrimy(self):
-        pass
+        herb = Herb("test", 10)
+        self.assertTrue(herb.getGrimy())
 
     def testSetGrimy(self):
-        pass
+        herb = Herb("test", 10)
+        herb.setGrimy(False)
+        self.assertFalse(herb.getGrimy())
 
 
 class TestCatalyst(unittest.TestCase):
@@ -197,7 +277,8 @@ class TestCatalyst(unittest.TestCase):
         self.assertEqual(catalyst.getQuality(), 10.0)
 
     def testGetQuality(self):
-        pass
+        catalyst = Catalyst('Test Catalyst', 7, 14)
+        self.assertEqual(catalyst.getQuality(), 14)
 
 
 unittest.main()
