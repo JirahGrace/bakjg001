@@ -27,8 +27,8 @@ class TestAlchemist(unittest.TestCase):
         pass
 
     def testRefineReagent(self):
-        herb = Herb(False, "test", 10)
-        catalyst = Catalyst(5, "Dog", 7,)
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
         alchemist = Alchemist(0, 0, 0, 0, 0, 0, Laboratory([], [], []))
         alchemist.collectReagents(herb, 1)
         alchemist.collectReagents(catalyst, 1)
@@ -42,11 +42,11 @@ class TestLaboratory(unittest.TestCase):
         pass
 
     def testAddReagent(self):
-        herb = Herb(False, "test", 10)
+        herb = Herb("test", 10)
         lab = Laboratory([], [], [])
         lab.addReagent(herb, 10)
         self.assertEqual(len(lab.getHerbs()), 10)
-        catalyst = Catalyst(5, "Dog", 7,)
+        catalyst = Catalyst("Dog", 7, 5)
         lab.addReagent(catalyst, 3)
         self.assertEqual(len(lab.getCatalysts()), 3)
 
@@ -67,8 +67,8 @@ class TestPotion(unittest.TestCase):
 
 class TestSuperPotion(unittest.TestCase):
     def testCalculateBoost(self):
-        herb = Herb(False, "test", 10)
-        catalyst = Catalyst(5, "Dog", 7,)
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
         superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
         self.assertEqual(superPotion.calculateBoost(), (10 + (7*5)*1.5))
         
@@ -82,8 +82,8 @@ class TestSuperPotion(unittest.TestCase):
 
 class TestExtremePotion(unittest.TestCase):
     def testCalculateBoost(self):
-        herb = Herb(False, "test", 10)
-        catalyst = Catalyst(5, "Dog", 7,)
+        herb = Herb("test", 10)
+        catalyst = Catalyst("Dog", 7, 5)
         superPotion = SuperPotion(herb, catalyst, "testPotion", "stat", -1.0)
         extremePotion = ExtremePotion(catalyst, superPotion, "Test", False, 1)
         self.assertEqual(extremePotion.calculateBoost(), 21.0)
@@ -108,7 +108,7 @@ class TestReagent(unittest.TestCase):
 
 class TestHerb(unittest.TestCase):
     def testRefine(self):
-        herb = Herb(False, "test", 10)
+        herb = Herb("test", 10)
         before = herb.getPotency()
         herb.refine()
         self.assertEqual(herb.getPotency(), before * 2.5)
@@ -123,7 +123,7 @@ class TestHerb(unittest.TestCase):
 
 class TestCatalyst(unittest.TestCase):
     def testRefine(self):
-        catalyst = Catalyst(7, 'Test Catalyst', 7)
+        catalyst = Catalyst('Test Catalyst', 7, 7)
         catalyst.refine()
         self.assertEqual(catalyst.getQuality(), 8.1)
         catalyst.refine()

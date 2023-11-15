@@ -17,7 +17,7 @@ class Potion(ABC):
                 should be rounded by 2 decimals.
             •  Extreme potion: (potency of its reagent * boost value of its super potion) * 3.0. The result should be
                 rounded by two decimals.'''
-    def __init__(self, name, stat, boost):
+    def __init__(self, name:str, stat:str, boost:float):
         self.__name = name
         self.__stat = stat
         self.__boost = boost
@@ -42,7 +42,7 @@ class Potion(ABC):
 class Reagent(ABC):
     ''' A reagent has a name and a potency value. A reagent can be refined but it depends on which type of
 reagent it is and the refinement will result in something different.'''
-    def __init__(self, name, potency):
+    def __init__(self, name:str, potency:float):
         self.__name = name
         self.__potency = potency
 
@@ -63,7 +63,7 @@ reagent it is and the refinement will result in something different.'''
 class Herb(Reagent):
     '''Herb: Refining leads to a herb that is not grimy and will multiply its existing potency by 2.5. It will
 print this information on the screen as well.'''
-    def __init__(self, grimy, name, potency):
+    def __init__(self, name:str, potency:float):
         super().__init__(name, potency)
         self.__grimy = True
 
@@ -86,7 +86,7 @@ class Catalyst(Reagent):
     ''' Catalyst: If the quality of the catalyst is below 8.9 then its quality will be increased by 1.1 and this
 information is printed on the screen. If its quality is equal or above 8.9 then its quality is set to 10.
 It should print on the screen the quality and say that “it cannot be refined any further”'''
-    def __init__(self, quality, name, potency):
+    def __init__(self, name:str, potency:float, quality:float):
         super().__init__(name, potency)
         self.__quality = quality
 
@@ -111,7 +111,7 @@ class SuperPotion(Potion):
     def __init__(self, herb:Herb, catalyst:Catalyst, name, stat, boost):
         super().__init__(name, stat, boost)
         self.__herb = herb
-        self.__cataylst = catalyst
+        self.__catalyst = catalyst
 
     def calculateBoost(self) -> float:
         boost = self.getHerb().getPotency() + (self.getCatalyst().getPotency() * self.getCatalyst().getQuality()) * 1.5
@@ -121,12 +121,12 @@ class SuperPotion(Potion):
         return self.__herb
 
     def getCatalyst(self):
-        return self.__cataylst
+        return self.__catalyst
 
 
 class ExtremePotion(Potion):
     ''' Extreme potion: (potency of its reagent * boost value of its super potion) * 3.0. The result should be rounded by two decimals'''
-    def __init__(self, reagent:Reagent, potion:Potion, name, stat, boost):
+    def __init__(self, reagent:Reagent, potion:Potion, name:str, stat:str, boost:float):
         super().__init__(name, stat, boost)
         self.__reagent = reagent
         self.__potion = potion
@@ -150,18 +150,18 @@ catalyst or another potion. Depending on the potion type, the proper potion must
 attribute of an alchemist the potion is increasing is specified in the status of the potions.
 Reagents can be added to the laboratory. To keep it simple, this functionality specifies the amount of
 reagents being available in the laboratory.'''
-    def __init__(self, potions:list[Potion], herbs:list[Herb], catalysts:list[Catalyst]):
+    def __init__(self, potions:[Potion], herbs:[Herb], catalysts:[Catalyst]):
         self.__potions = potions
         self.__herbs = herbs
         self.__catalysts = catalysts
 
-    def getHerbs(self):
+    def getHerbs(self) -> [Herb]:
         return self.__herbs
     
-    def getCatalysts(self):
+    def getCatalysts(self) -> [Catalyst]:
         return self.__catalysts
     
-    def getPotions(self):
+    def getPotions(self) -> [Potion]:
         return self.__potions
     
     def mixPotion(self, name:str, type:str, stat:str, primaryIngredient:str, secondaryIngredient:str):
