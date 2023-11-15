@@ -165,8 +165,34 @@ reagents being available in the laboratory.'''
         return self.__potions
     
     def mixPotion(self, name:str, type:str, stat:str, primaryIngredient:str, secondaryIngredient:str):
-        pass
-
+        firstIngredient = None
+        secondIngredient = None
+        for herb in self.getHerbs():
+            if herb.getName() == primaryIngredient:
+                firstIngredient = herb
+                self.getHerbs().remove(herb)
+                break
+        for catalyst in self.getCatalysts():
+            if catalyst.getName() == primaryIngredient:
+                firstIngredient = catalyst
+                self.getCatalysts().remove(catalyst)
+                break
+            if catalyst.getName() == secondaryIngredient:
+                secondIngredient = catalyst
+                self.getCatalysts().remove(catalyst)
+                break
+        if secondIngredient is not None:
+            self.__potions.append(SuperPotion(firstIngredient, secondIngredient, name, stat, 1))
+            return 
+        for potion in self.__potions:
+            if potion.getName() == secondaryIngredient:
+                secondIngredient = potion
+                self.__potions.remove(potion)
+                break
+        if secondIngredient is not None:
+            self.__potions.append(ExtremePotion(firstIngredient, secondaryIngredient, name, stat, secondIngredient.calculateBoost()))
+            return
+                                  
     def addReagent(self, reagent:Reagent, amount:int):
         if isinstance(reagent, Herb):
             self.__herbs.extend([reagent]*amount)
@@ -192,7 +218,7 @@ recipe of an extreme potion consists of a herb or catalyst and a super potion.''
         self.__recipes = {
             "Super Attack": ["Irit", "Eye of Newt"],
             "Super Strength": ["Kwuarm", "Limpwurt Root"],
-            "Super Defence": ["Cadantine, White Berries"],
+            "Super Defence": ["Cadantine", "White Berries"],
             "Super Magic": ["Lantadyme", "Potato Cactus"],
             "Super Ranging": ["Dwarf Weed", "Wine of Zamorak"],
             "Super Necromancy": ["Arbuck", "Blood of Orcus"],
@@ -210,12 +236,18 @@ recipe of an extreme potion consists of a herb or catalyst and a super potion.''
         return self.__recipes
 
     def mixPotion(self, recipe):
-        pass
+        if recipe not in self.__recipes:
+            return
+        
+        type, stat = recipe.split(" ")
+
+        [firstIngredient, secondIngredient] = self.__recipes[recipe]
+        self.__laboratory.mixPotion(recipe, type, stat, firstIngredient, secondIngredient)
 
     def drinkPotion(self, potion):
         pass
 
-    def collectReagents(self, reagent, amount):
+    def collectReagent(self, reagent, amount):
         self.__laboratory.addReagent(reagent, amount)
 
     def refineReagents(self):

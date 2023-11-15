@@ -18,7 +18,33 @@ class TestAlchemist(unittest.TestCase):
         pass
 
     def testMixPotion(self):
-        pass
+        alchemist = Alchemist(1, 1, 1, 1, 1, 1, Laboratory([],[],[]))
+        # Add required herbs.
+        alchemist.collectReagent(Herb("Irit", 1.0), 10)
+        alchemist.collectReagent(Herb("Kwuarm",1.2), 10)
+        alchemist.collectReagent(Herb("Cadantine", 1.5), 10)
+        alchemist.collectReagent(Herb("Lantadyme", 2.0), 10)
+        alchemist.collectReagent(Herb("Dwarf Weed", 2.5), 10)
+        alchemist.collectReagent(Herb("Arbuck", 2.6), 10)
+        alchemist.collectReagent(Herb("Avantoe", 3.0), 10)
+        alchemist.collectReagent(Herb("Torstol", 4.5), 10)
+        # Add required catalysts.
+        alchemist.collectReagent(Catalyst("Eye of Newt", 4.3, 1.0), 10)
+        alchemist.collectReagent(Catalyst("Limpwurt Root", 3.6, 1.7), 10)
+        alchemist.collectReagent(Catalyst("White Berries", 1.2, 2.0), 10)
+        alchemist.collectReagent(Catalyst("Potato Cactus", 7.3, 0.1), 10)
+        alchemist.collectReagent(Catalyst("Wine of Zamorak", 1.7, 5.0), 10)
+        alchemist.collectReagent(Catalyst("Blood of Orcus", 4.5, 2.2), 10)
+        alchemist.collectReagent(Catalyst("Ground Mud Rune", 2.1, 6.7), 10)
+        alchemist.collectReagent(Catalyst("Grenwall Spike", 6.3, 4.9), 10)
+        alchemist.collectReagent(Catalyst("Ground Miasma Rune",3.3, 5.2), 10)
+        # Mix.
+        print("-" * 40 + "Mix Potions from Recipes" + "-" * 40)
+        for recipe in alchemist.getRecipies():
+            alchemist.mixPotion(recipe) 
+
+        self.assertEqual(len(alchemist.getLaboratory().getPotions()), 6)
+
 
     def testDrinkPotion(self):
         pass
@@ -30,8 +56,8 @@ class TestAlchemist(unittest.TestCase):
         herb = Herb("test", 10)
         catalyst = Catalyst("Dog", 7, 5)
         alchemist = Alchemist(0, 0, 0, 0, 0, 0, Laboratory([], [], []))
-        alchemist.collectReagents(herb, 1)
-        alchemist.collectReagents(catalyst, 1)
+        alchemist.collectReagent(herb, 1)
+        alchemist.collectReagent(catalyst, 1)
         alchemist.refineReagents()
         self.assertEqual(alchemist.getLaboratory().getHerbs()[0].getPotency(), 25.0)
         self.assertEqual(alchemist.getLaboratory().getCatalysts()[0].getQuality(), 6.1)
@@ -39,7 +65,15 @@ class TestAlchemist(unittest.TestCase):
 
 class TestLaboratory(unittest.TestCase):
     def testMixPotion(self):
-        pass
+        lab = Laboratory([], [], [])
+        herb = Herb("test", 10)
+        lab.addReagent(herb, 10)
+        catalyst = Catalyst("Dog", 7, 5)
+        lab.addReagent(catalyst, 3)
+        lab.mixPotion("TestPotion", "Don't Care", "Magic", "test", "Dog")
+        self.assertEqual(len(lab.getPotions()), 1)
+        lab.mixPotion("TestExtreme", "Don't Care", "Extreme", "test", "TestPotion")
+        self.assertEqual(len(lab.getPotions()), 1)
 
     def testAddReagent(self):
         herb = Herb("test", 10)
