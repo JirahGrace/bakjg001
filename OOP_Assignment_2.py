@@ -228,6 +228,24 @@ recipe of an extreme potion consists of a herb or catalyst and a super potion.''
             "Extreme Magic": ["Ground Mud Rune", "Super Magic"],
             "Extreme Ranging": ["Grenwall Spike", "Super Ranging"],
             "Extreme Necromancy": ["Ground Miasma Rune", "Super Necromancy"]}
+        
+    def getAttack(self):
+        return self.__attack
+    
+    def getStrength(self):
+        return self.__strength
+    
+    def getDefence(self):
+        return self.__defense
+    
+    def getMagic(self):
+        return self.__magic
+    
+    def getRanged(self):
+        return self.__ranged
+    
+    def getNecromancy(self):
+        return self.__necromancy
 
     def getLaboratory(self):
         return self.__laboratory
@@ -244,8 +262,29 @@ recipe of an extreme potion consists of a herb or catalyst and a super potion.''
         [firstIngredient, secondIngredient] = self.__recipes[recipe]
         self.__laboratory.mixPotion(recipe, type, stat, firstIngredient, secondIngredient)
 
-    def drinkPotion(self, potion):
-        pass
+    def drinkPotion(self, potion:Potion):
+        output = "Drinking " + potion.getName()
+        if potion.getStat() == "Attack":
+            self.__attack += potion.calculateBoost()
+            output = output + ": Attack increased to " + str(self.__attack)
+        elif potion.getStat() == "Strength":
+            self.__strength += potion.calculateBoost()
+            output = output + ": Strength increased to " + str(self.__strength)
+        elif potion.getStat() == "Defence":
+            self.__defense += potion.calculateBoost()
+            output = output + ": Defence increased to " + str(self.__defense)
+        elif potion.getStat() == "Magic":
+            self.__magic += potion.calculateBoost()
+            output = output + ": Magic increased to " + str(self.__magic)
+        elif potion.getStat() == "Ranging":
+            self.__ranged += potion.calculateBoost()
+            output = output + ": Ranging increased to " + str(self.__ranged)
+        elif potion.getStat() == "Necromancy":
+            self.__necromancy += potion.calculateBoost()
+            output = output + ": Necromancy increased to " + str(self.__necromancy)
+        else:
+            raise Exception(f'Unknown stat {potion.getStat()}')
+        return output
 
     def collectReagent(self, reagent, amount):
         self.__laboratory.addReagent(reagent, amount)

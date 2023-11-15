@@ -39,7 +39,6 @@ class TestAlchemist(unittest.TestCase):
         alchemist.collectReagent(Catalyst("Grenwall Spike", 6.3, 4.9), 10)
         alchemist.collectReagent(Catalyst("Ground Miasma Rune",3.3, 5.2), 10)
         # Mix.
-        print("-" * 40 + "Mix Potions from Recipes" + "-" * 40)
         for recipe in alchemist.getRecipies():
             alchemist.mixPotion(recipe) 
 
@@ -47,7 +46,39 @@ class TestAlchemist(unittest.TestCase):
 
 
     def testDrinkPotion(self):
-        pass
+        alchemist = Alchemist(1, 1, 1, 1, 1, 1, Laboratory([],[],[]))
+        # Add required herbs.
+        alchemist.collectReagent(Herb("Irit", 1.0), 10)
+        alchemist.collectReagent(Herb("Kwuarm",1.2), 10)
+        alchemist.collectReagent(Herb("Cadantine", 1.5), 10)
+        alchemist.collectReagent(Herb("Lantadyme", 2.0), 10)
+        alchemist.collectReagent(Herb("Dwarf Weed", 2.5), 10)
+        alchemist.collectReagent(Herb("Arbuck", 2.6), 10)
+        alchemist.collectReagent(Herb("Avantoe", 3.0), 10)
+        alchemist.collectReagent(Herb("Torstol", 4.5), 10)
+        # Add required catalysts.
+        alchemist.collectReagent(Catalyst("Eye of Newt", 4.3, 1.0), 10)
+        alchemist.collectReagent(Catalyst("Limpwurt Root", 3.6, 1.7), 10)
+        alchemist.collectReagent(Catalyst("White Berries", 1.2, 2.0), 10)
+        alchemist.collectReagent(Catalyst("Potato Cactus", 7.3, 0.1), 10)
+        alchemist.collectReagent(Catalyst("Wine of Zamorak", 1.7, 5.0), 10)
+        alchemist.collectReagent(Catalyst("Blood of Orcus", 4.5, 2.2), 10)
+        alchemist.collectReagent(Catalyst("Ground Mud Rune", 2.1, 6.7), 10)
+        alchemist.collectReagent(Catalyst("Grenwall Spike", 6.3, 4.9), 10)
+        alchemist.collectReagent(Catalyst("Ground Miasma Rune",3.3, 5.2), 10)
+        # Mix.
+        for recipe in alchemist.getRecipies():
+            alchemist.mixPotion(recipe) 
+
+        for potion in alchemist.getLaboratory().getPotions():
+            print(alchemist.drinkPotion(potion))
+
+        self.assertEqual(alchemist.getAttack(), 68.05)
+        self.assertEqual(alchemist.getStrength(), 78.85)
+        self.assertEqual(alchemist.getDefence(), 31.599999999999998)
+        self.assertEqual(alchemist.getMagic(), 20.4985)
+        self.assertEqual(alchemist.getRanged(), 289.225)
+        self.assertEqual(alchemist.getNecromancy(), 173.75500000000002)
 
     def testCollectReagent(self):
         pass
